@@ -16,6 +16,9 @@
 		A3EF0ABE25E031D7004BD402 /* WalkthroughConfigurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EF0AB925E031D7004BD402 /* WalkthroughConfigurations.swift */; };
 		A3EF0ABF25E031D7004BD402 /* WalkthroughController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EF0ABA25E031D7004BD402 /* WalkthroughController.swift */; };
 		A3EF0AC025E031D7004BD402 /* WalkthroughControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EF0ABB25E031D7004BD402 /* WalkthroughControllerDelegate.swift */; };
+		A3EF0ACD25E0428E004BD402 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EF0ACB25E0428E004BD402 /* UIView+Extension.swift */; };
+		A3EF0ACE25E0428E004BD402 /* CGFloat+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EF0ACC25E0428E004BD402 /* CGFloat+Extension.swift */; };
+		A3EF0AD125E04603004BD402 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EF0AD025E04603004BD402 /* TestViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +33,9 @@
 		A3EF0AB925E031D7004BD402 /* WalkthroughConfigurations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkthroughConfigurations.swift; sourceTree = "<group>"; };
 		A3EF0ABA25E031D7004BD402 /* WalkthroughController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkthroughController.swift; sourceTree = "<group>"; };
 		A3EF0ABB25E031D7004BD402 /* WalkthroughControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkthroughControllerDelegate.swift; sourceTree = "<group>"; };
+		A3EF0ACB25E0428E004BD402 /* UIView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		A3EF0ACC25E0428E004BD402 /* CGFloat+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extension.swift"; sourceTree = "<group>"; };
+		A3EF0AD025E04603004BD402 /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +70,7 @@
 			children = (
 				A3EF0A9325E02D59004BD402 /* AppDelegate.swift */,
 				A3EF0A9925E02D59004BD402 /* Main.storyboard */,
+				A3EF0AD025E04603004BD402 /* TestViewController.swift */,
 				A3EF0A9C25E02D5B004BD402 /* Assets.xcassets */,
 				A3EF0A9E25E02D5B004BD402 /* LaunchScreen.storyboard */,
 				A3EF0AA125E02D5B004BD402 /* Info.plist */,
@@ -72,8 +79,18 @@
 				A3EF0AB725E031D7004BD402 /* WalkthroughControllerDataSource.swift */,
 				A3EF0ABB25E031D7004BD402 /* WalkthroughControllerDelegate.swift */,
 				A3EF0AB825E031D7004BD402 /* WalkthroughPopup.swift */,
+				A3EF0ACA25E0428E004BD402 /* Utils */,
 			);
 			path = Walkthrough;
+			sourceTree = "<group>";
+		};
+		A3EF0ACA25E0428E004BD402 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				A3EF0ACB25E0428E004BD402 /* UIView+Extension.swift */,
+				A3EF0ACC25E0428E004BD402 /* CGFloat+Extension.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -147,10 +164,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				A3EF0A9425E02D59004BD402 /* AppDelegate.swift in Sources */,
+				A3EF0ACD25E0428E004BD402 /* UIView+Extension.swift in Sources */,
+				A3EF0ACE25E0428E004BD402 /* CGFloat+Extension.swift in Sources */,
 				A3EF0ABE25E031D7004BD402 /* WalkthroughConfigurations.swift in Sources */,
 				A3EF0ABF25E031D7004BD402 /* WalkthroughController.swift in Sources */,
 				A3EF0ABD25E031D7004BD402 /* WalkthroughPopup.swift in Sources */,
 				A3EF0ABC25E031D7004BD402 /* WalkthroughControllerDataSource.swift in Sources */,
+				A3EF0AD125E04603004BD402 /* TestViewController.swift in Sources */,
 				A3EF0AC025E031D7004BD402 /* WalkthroughControllerDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
