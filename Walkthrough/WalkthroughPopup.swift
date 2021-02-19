@@ -13,26 +13,45 @@ class WalkthroughPopup {
     var bodyView: UIView?
     var customPunch: UIBezierPath?
     var arrowHookCorner: HookCorner = .top
-    var isRounded: Bool
+    var cornerRounding: Rounding = .none
+    var punchPadding: CGFloat = 4
     
-    internal init(targetComponent: UIView? = nil, arrowView: UIView? = nil, bodyView: UIView? = nil, customPunch: UIBezierPath? = nil, arrowHookCorner: WalkthroughPopup.HookCorner = .top, isRounded: Bool) {
+    internal init(targetComponent: UIView? = nil, arrowView: UIView? = nil, bodyView: UIView? = nil, customPunch: UIBezierPath? = nil, arrowHookCorner: WalkthroughPopup.HookCorner = .top, cornerRounding: WalkthroughPopup.Rounding = .none, punchPadding: CGFloat = 4) {
+        
         self.targetComponent = targetComponent
         self.arrowView = arrowView
         self.bodyView = bodyView
         self.customPunch = customPunch
         self.arrowHookCorner = arrowHookCorner
-        self.isRounded = isRounded
+        self.cornerRounding = cornerRounding
+        self.punchPadding = punchPadding
     }
-    
+
     enum HookCorner {
         
         case top
         case left
         case right
         case bottom
-        case topLeft
-        case topRight
-        case bottomLeft
-        case bottomRight
+    }
+    
+    enum Rounding {
+        
+        case none
+        case custom(CGFloat)
+        case fullyRounded
+        
+        var cornerRadius: CGFloat {
+            
+            switch self {
+            
+            case .none:
+                return 0
+            case .custom(let customValue):
+                return customValue
+            case .fullyRounded:
+                return .infinity
+            }
+        }
     }
 }

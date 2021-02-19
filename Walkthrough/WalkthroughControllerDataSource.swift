@@ -9,7 +9,5 @@ import Foundation
 protocol WalkthroughControllerDataSource: NSObjectProtocol {
     
     func numberOfWalkthroughPopups(for walkthroughController: WalkthroughController) -> Int
-    func walkthroughController(_ walkthroughController: WalkthroughController, walkthroughPopupAt index: Int) -> WalkthroughPopup
-    func walkthroughPopups(at index: Int) -> WalkthroughPopup
-    func numberOfWalkthroughPopups() -> Int
+    func walkthroughPopup(for walkthroughController: WalkthroughController, at index: Int) -> WalkthroughPopup
 }
