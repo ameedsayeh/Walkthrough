@@ -9,7 +9,6 @@ import UIKit
 struct WalkthroughConfigurations {
     
     var overlayColor: UIColor = UIColor.black.withAlphaComponent(0.5)
-    var forwardTouchEvents: Bool = false
     var animationDuration: TimeInterval = 0.3
     var animationTypes: UIView.AnimationOptions = [.transitionCrossDissolve]
 }

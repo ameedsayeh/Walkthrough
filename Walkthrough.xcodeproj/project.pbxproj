@@ -49,6 +49,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A30856F1275CF2F200EB5B87 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				A3EF0AB925E031D7004BD402 /* WalkthroughConfigurations.swift */,
+				A3EF0ABA25E031D7004BD402 /* WalkthroughController.swift */,
+				A3EF0AB725E031D7004BD402 /* WalkthroughControllerDataSource.swift */,
+				A3EF0ABB25E031D7004BD402 /* WalkthroughControllerDelegate.swift */,
+				A3EF0AB825E031D7004BD402 /* WalkthroughPopUp.swift */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		A30856F2275CF2FB00EB5B87 /* Example */ = {
+			isa = PBXGroup;
+			children = (
+				A3EF0AD025E04603004BD402 /* TestViewController.swift */,
+			);
+			path = Example;
+			sourceTree = "<group>";
+		};
 		A3EF0A8725E02D59004BD402 = {
 			isa = PBXGroup;
 			children = (
@@ -68,17 +88,13 @@
 		A3EF0A9225E02D59004BD402 /* Walkthrough */ = {
 			isa = PBXGroup;
 			children = (
+				A30856F2275CF2FB00EB5B87 /* Example */,
+				A30856F1275CF2F200EB5B87 /* Source */,
 				A3EF0A9325E02D59004BD402 /* AppDelegate.swift */,
 				A3EF0A9925E02D59004BD402 /* Main.storyboard */,
-				A3EF0AD025E04603004BD402 /* TestViewController.swift */,
 				A3EF0A9C25E02D5B004BD402 /* Assets.xcassets */,
 				A3EF0A9E25E02D5B004BD402 /* LaunchScreen.storyboard */,
 				A3EF0AA125E02D5B004BD402 /* Info.plist */,
-				A3EF0AB925E031D7004BD402 /* WalkthroughConfigurations.swift */,
-				A3EF0ABA25E031D7004BD402 /* WalkthroughController.swift */,
-				A3EF0AB725E031D7004BD402 /* WalkthroughControllerDataSource.swift */,
-				A3EF0ABB25E031D7004BD402 /* WalkthroughControllerDelegate.swift */,
-				A3EF0AB825E031D7004BD402 /* WalkthroughPopUp.swift */,
 				A3EF0ACA25E0428E004BD402 /* Utils */,
 			);
 			path = Walkthrough;

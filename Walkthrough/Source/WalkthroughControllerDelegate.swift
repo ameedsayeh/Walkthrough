@@ -23,6 +23,9 @@ protocol WalkthroughControllerDelegate: AnyObject {
     func walkthroughController(_ walkthroughController: WalkthroughController,
                                didHidePopUpAt index: Int)
 
+    func walkthroughController(_ walkthroughController: WalkthroughController,
+                               didTapInsidePunchForPopUpAt index: Int)
+
     func walkthroughControllerDidFinishFlow(_ walkthroughController: WalkthroughController,
                                             forceStop: Bool)
 }
@@ -44,6 +47,9 @@ extension WalkthroughControllerDelegate {
 
     func walkthroughController(_ walkthroughController: WalkthroughController,
                                didHidePopUpAt index: Int) {}
+    
+    func walkthroughController(_ walkthroughController: WalkthroughController,
+                               didTapInsidePunchForPopUpAt index: Int) {}
 
     func walkthroughControllerDidFinishFlow(_ walkthroughController: WalkthroughController,
                                             forceStop: Bool) {}

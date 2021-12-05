@@ -65,4 +65,8 @@ extension TestViewController: WalkthroughControllerDelegate {
     func walkthroughControllerDidFinishFlow(_ walkthroughController: WalkthroughController, forceStop: Bool) {
         print("Did finish")
     }
+
+    func walkthroughController(_ walkthroughController: WalkthroughController, didTapInsidePunchForPopUpAt index: Int) {
+        print("Did tap inside the punch")
+    }
 }

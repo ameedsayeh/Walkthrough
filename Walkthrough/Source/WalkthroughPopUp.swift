@@ -12,23 +12,23 @@ class WalkthroughPopUp {
     var arrowView: UIView?
     var bodyView: UIView?
     var customPunch: UIBezierPath?
-    var arrowHookCorner: HookCorner = .top
     var cornerRounding: Rounding = .none
+    var bodyViewPosition: BodyViewPosition = .above
     var punchPadding: CGFloat = 4
     
     internal init(targetComponent: UIView? = nil,
                   arrowView: UIView? = nil,
                   bodyView: UIView? = nil,
+                  bodyViewPosition: BodyViewPosition = .fullScreen,
                   customPunch: UIBezierPath? = nil,
-                  arrowHookCorner: HookCorner = .top,
                   cornerRounding: Rounding = .none,
                   punchPadding: CGFloat = 4) {
         
         self.targetComponent = targetComponent
         self.arrowView = arrowView
         self.bodyView = bodyView
+        self.bodyViewPosition = bodyViewPosition
         self.customPunch = customPunch
-        self.arrowHookCorner = arrowHookCorner
         self.cornerRounding = cornerRounding
         self.punchPadding = punchPadding
     }
@@ -59,14 +59,12 @@ extension WalkthroughPopUp {
     }
 }
 
-// MARK: HookCorner
 extension WalkthroughPopUp {
 
-    enum HookCorner {
+    enum BodyViewPosition {
 
-        case top
-        case left
-        case right
-        case bottom
+        case above
+        case below
+        case fullScreen
     }
 }

@@ -17,6 +17,7 @@ final class WalkthroughController {
 
     private var currentIndex: Int = -1
     private var popUpView: UIView?
+    private var punchPath: UIBezierPath?
     
     init(with configurations: WalkthroughConfigurations = WalkthroughConfigurations()) {
         self.configurations = configurations
@@ -113,20 +114,39 @@ final class WalkthroughController {
         fullPath.usesEvenOddFillRule = true
 
         let punchPath = Self.buildPunchPath(for: popUp)
+        self.punchPath = punchPath
+
         fullPath.append(punchPath)
 
         let fillLayer = CAShapeLayer()
         fillLayer.path = fullPath.cgPath
         fillLayer.fillRule = .evenOdd
-        fillLayer.fillColor = configurations.overlayColor.cgColor
+        fillLayer.fillColor = self.configurations.overlayColor.cgColor
 
         containerView.layer.addSublayer(fillLayer)
-        //containerView.isUserInteractionEnabled = !self.configurations.forwardTouchEvents
 
-        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.didTapOnOverlay))
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.didTapOnOverlay(_:)))
         containerView.addGestureRecognizer(tapRecognizer)
 
         if let bodyView = popUp.bodyView {
+
+            let size = bodyView.bounds.size
+
+            let punchX = punchPath.bounds.origin.x
+            let punchY = punchPath.bounds.origin.y
+            let punchHeight = punchPath.bounds.height
+            
+            switch popUp.bodyViewPosition {
+            case .fullScreen:
+                break
+
+            case .above:
+                bodyView.frame.origin = CGPoint(x: 0, y: punchY - size.height)
+
+            case .below:
+                bodyView.frame.origin = CGPoint(x: 0, y: punchY + punchHeight)
+            }
+
             containerView.addSubview(bodyView)
         }
 
@@ -182,7 +202,14 @@ final class WalkthroughController {
 
     // MARK: Actions
 
-    @objc private func didTapOnOverlay() {
+    @objc private func didTapOnOverlay(_ recognizer: UITapGestureRecognizer) {
+
+        let tapPoint = recognizer.location(in: self.popUpView)
+
+        if self.punchPath?.bounds.contains(tapPoint) ?? false {
+            self.delegate?.walkthroughController(self, didTapInsidePunchForPopUpAt: self.currentIndex)
+        }
+
         self.handleNextPopUp()
     }
 }
