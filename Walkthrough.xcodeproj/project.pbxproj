@@ -12,7 +12,7 @@
 		A3EF0A9D25E02D5B004BD402 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A3EF0A9C25E02D5B004BD402 /* Assets.xcassets */; };
 		A3EF0AA025E02D5B004BD402 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3EF0A9E25E02D5B004BD402 /* LaunchScreen.storyboard */; };
 		A3EF0ABC25E031D7004BD402 /* WalkthroughControllerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EF0AB725E031D7004BD402 /* WalkthroughControllerDataSource.swift */; };
-		A3EF0ABD25E031D7004BD402 /* WalkthroughPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EF0AB825E031D7004BD402 /* WalkthroughPopup.swift */; };
+		A3EF0ABD25E031D7004BD402 /* WalkthroughPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EF0AB825E031D7004BD402 /* WalkthroughPopUp.swift */; };
 		A3EF0ABE25E031D7004BD402 /* WalkthroughConfigurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EF0AB925E031D7004BD402 /* WalkthroughConfigurations.swift */; };
 		A3EF0ABF25E031D7004BD402 /* WalkthroughController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EF0ABA25E031D7004BD402 /* WalkthroughController.swift */; };
 		A3EF0AC025E031D7004BD402 /* WalkthroughControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3EF0ABB25E031D7004BD402 /* WalkthroughControllerDelegate.swift */; };
@@ -29,7 +29,7 @@
 		A3EF0A9F25E02D5B004BD402 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A3EF0AA125E02D5B004BD402 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A3EF0AB725E031D7004BD402 /* WalkthroughControllerDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkthroughControllerDataSource.swift; sourceTree = "<group>"; };
-		A3EF0AB825E031D7004BD402 /* WalkthroughPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkthroughPopup.swift; sourceTree = "<group>"; };
+		A3EF0AB825E031D7004BD402 /* WalkthroughPopUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkthroughPopUp.swift; sourceTree = "<group>"; };
 		A3EF0AB925E031D7004BD402 /* WalkthroughConfigurations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkthroughConfigurations.swift; sourceTree = "<group>"; };
 		A3EF0ABA25E031D7004BD402 /* WalkthroughController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkthroughController.swift; sourceTree = "<group>"; };
 		A3EF0ABB25E031D7004BD402 /* WalkthroughControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkthroughControllerDelegate.swift; sourceTree = "<group>"; };
@@ -78,7 +78,7 @@
 				A3EF0ABA25E031D7004BD402 /* WalkthroughController.swift */,
 				A3EF0AB725E031D7004BD402 /* WalkthroughControllerDataSource.swift */,
 				A3EF0ABB25E031D7004BD402 /* WalkthroughControllerDelegate.swift */,
-				A3EF0AB825E031D7004BD402 /* WalkthroughPopup.swift */,
+				A3EF0AB825E031D7004BD402 /* WalkthroughPopUp.swift */,
 				A3EF0ACA25E0428E004BD402 /* Utils */,
 			);
 			path = Walkthrough;
@@ -168,7 +168,7 @@
 				A3EF0ACE25E0428E004BD402 /* CGFloat+Extension.swift in Sources */,
 				A3EF0ABE25E031D7004BD402 /* WalkthroughConfigurations.swift in Sources */,
 				A3EF0ABF25E031D7004BD402 /* WalkthroughController.swift in Sources */,
-				A3EF0ABD25E031D7004BD402 /* WalkthroughPopup.swift in Sources */,
+				A3EF0ABD25E031D7004BD402 /* WalkthroughPopUp.swift in Sources */,
 				A3EF0ABC25E031D7004BD402 /* WalkthroughControllerDataSource.swift in Sources */,
 				A3EF0AD125E04603004BD402 /* TestViewController.swift in Sources */,
 				A3EF0AC025E031D7004BD402 /* WalkthroughControllerDelegate.swift in Sources */,

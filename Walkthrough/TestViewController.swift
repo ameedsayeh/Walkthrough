@@ -11,7 +11,7 @@ class TestViewController: UIViewController {
     
     @IBOutlet weak var button: UIButton!
     
-    let tourController = WalkthroughController(with: WalkthroughConfigurations(forwardTouchEvents: true))
+    lazy var tourController = WalkthroughController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,22 +19,50 @@ class TestViewController: UIViewController {
         self.tourController.delegate = self
         self.tourController.dataSource = self
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        tourController.start(on: UIApplication.shared.windows.first!)
+
+    @IBAction func didTapClickMe() {
+        self.tourController.start(on: self.view.window!)
     }
 }
 
-extension TestViewController: WalkthroughControllerDelegate, WalkthroughControllerDataSource {
-    
-    func walkthroughPopup(for walkthroughController: WalkthroughController, at index: Int) -> WalkthroughPopup {
-        
-        return WalkthroughPopup(targetComponent: self.button, cornerRounding: .fullyRounded)
-    }
-    
+extension TestViewController: WalkthroughControllerDataSource {
+
     func numberOfWalkthroughPopups(for walkthroughController: WalkthroughController) -> Int {
-        return 1
+        5
+    }
+
+    func walkthroughPopUp(for walkthroughController: WalkthroughController, at index: Int) -> WalkthroughPopUp? {
+
+        let view = UIView(frame: self.view.bounds)
+
+        view.backgroundColor = UIColor(red: CGFloat.random(in: 0...1),
+                                       green:  CGFloat.random(in: 0...1),
+                                       blue:  CGFloat.random(in: 0...1),
+                                       alpha: 0.4)
+
+        return WalkthroughPopUp(targetComponent: self.button, bodyView: view, cornerRounding: .fullyRounded)
+    }
+}
+
+extension TestViewController: WalkthroughControllerDelegate {
+
+    func walkthroughController(_ walkthroughController: WalkthroughController, willShowPopUpAt index: Int) {
+        print("Pop up at index \(index) will be shown")
+    }
+
+    func walkthroughController(_ walkthroughController: WalkthroughController, didShowPopUpAt index: Int) {
+        print("Pop up at index \(index) was shown")
+    }
+
+    func walkthroughController(_ walkthroughController: WalkthroughController, willHidePopUpAt index: Int) {
+        print("Pop up at index \(index) will be hidden")
+    }
+
+    func walkthroughController(_ walkthroughController: WalkthroughController, didHidePopUpAt index: Int) {
+        print("Pop up at index \(index) was hidden")
+    }
+
+    func walkthroughControllerDidFinishFlow(_ walkthroughController: WalkthroughController, forceStop: Bool) {
+        print("Did finish")
     }
 }

@@ -6,39 +6,45 @@
 
 import Foundation
 
-protocol WalkthroughControllerDelegate: NSObjectProtocol {
-    
-    func walkthroughController(for walkthroughController: WalkthroughController, shouldShow popup: WalkthroughPopup, at index: Int) -> Bool
-    func walkthroughController(for walkthroughController: WalkthroughController, willShow popup: WalkthroughPopup, at index: Int) -> Void
-    func walkthroughController(for walkthroughController: WalkthroughController, didShow popup: WalkthroughPopup, at index: Int) -> Void
-    func walkthroughController(for walkthroughController: WalkthroughController, didSkip popup: WalkthroughPopup, at index: Int) -> Void
-    func walkthroughController(for walkthroughController: WalkthroughController, didContinue popup: WalkthroughPopup, at index: Int) -> Void
-    func didFinishWalkthrough(for walkthroughController: WalkthroughController, skipped: Bool) -> Void
+protocol WalkthroughControllerDelegate: AnyObject {
+
+    func walkthroughController(_ walkthroughController: WalkthroughController,
+                               shouldShowPopUpAt index: Int) -> Bool
+
+    func walkthroughController(_ walkthroughController: WalkthroughController,
+                               willShowPopUpAt index: Int)
+
+    func walkthroughController(_ walkthroughController: WalkthroughController,
+                               didShowPopUpAt index: Int)
+
+    func walkthroughController(_ walkthroughController: WalkthroughController,
+                               willHidePopUpAt index: Int)
+
+    func walkthroughController(_ walkthroughController: WalkthroughController,
+                               didHidePopUpAt index: Int)
+
+    func walkthroughControllerDidFinishFlow(_ walkthroughController: WalkthroughController,
+                                            forceStop: Bool)
 }
 
+// MARK: Default implementation
 extension WalkthroughControllerDelegate {
-    
-    func walkthroughController(for walkthroughController: WalkthroughController, shouldShow popup: WalkthroughPopup, at index: Int) -> Bool {
-        return true
-    }
-    
-    func walkthroughController(for walkthroughController: WalkthroughController, willShow popup: WalkthroughPopup, at index: Int) -> Void {
-        return
-    }
-    
-    func walkthroughController(for walkthroughController: WalkthroughController, didShow popup: WalkthroughPopup, at index: Int) -> Void {
-        return
-    }
-    
-    func walkthroughController(for walkthroughController: WalkthroughController, didSkip popup: WalkthroughPopup, at index: Int) -> Void {
-        return
-    }
-    
-    func walkthroughController(for walkthroughController: WalkthroughController, didContinue popup: WalkthroughPopup, at index: Int) -> Void {
-        return
-    }
-    
-    func didFinishWalkthrough(for walkthroughController: WalkthroughController, skipped: Bool) -> Void {
-        return
-    }
+
+    func walkthroughController(_ walkthroughController: WalkthroughController,
+                               shouldShowPopUpAt index: Int) -> Bool { true }
+
+    func walkthroughController(_ walkthroughController: WalkthroughController,
+                               willShowPopUpAt index: Int) {}
+
+    func walkthroughController(_ walkthroughController: WalkthroughController,
+                               didShowPopUpAt index: Int) {}
+
+    func walkthroughController(_ walkthroughController: WalkthroughController,
+                               willHidePopUpAt index: Int) {}
+
+    func walkthroughController(_ walkthroughController: WalkthroughController,
+                               didHidePopUpAt index: Int) {}
+
+    func walkthroughControllerDidFinishFlow(_ walkthroughController: WalkthroughController,
+                                            forceStop: Bool) {}
 }

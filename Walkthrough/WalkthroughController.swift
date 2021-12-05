@@ -12,107 +12,177 @@ final class WalkthroughController {
     weak var dataSource: WalkthroughControllerDataSource?
     
     private(set) var configurations: WalkthroughConfigurations
-    
+
     private weak var presentationWindow: UIWindow?
+
+    private var currentIndex: Int = -1
+    private var popUpView: UIView?
     
-    private var hasStarted = false
-    private var currentIndex: Int = 0
-    private var isSkipped = false
-    
-    private var overlayView: UIView?
-    
-    init() {
-        self.configurations = WalkthroughConfigurations()
-    }
-    
-    init(with configurations: WalkthroughConfigurations) {
+    init(with configurations: WalkthroughConfigurations = WalkthroughConfigurations()) {
         self.configurations = configurations
     }
-    
+
+    // MARK: Start Mechanism
+
     public func start(on window: UIWindow) {
-        
-        if !hasStarted {
-            self.presentationWindow = window
-            self.start()
-        }
+
+        self.presentationWindow = window
+        self.currentIndex == -1 ?
+            self.start():
+            self.startOver()
     }
-    
-    public func stop() {
-        
-        self.hasStarted = false
-        self.currentIndex = 0
-        self.delegate?.didFinishWalkthrough(for: self, skipped: self.isSkipped)
-    }
-    
+
     private func start() {
-        
-        self.hasStarted = true
-        self.showPopup(at: 0)
+
+        guard let dataSource = self.dataSource else { return }
+
+        let numberOfPopUps = dataSource.numberOfWalkthroughPopups(for: self)
+
+        guard numberOfPopUps > 0 else { return }
+
+        self.currentIndex = 0
+        self.handlePopUp(at: self.currentIndex)
     }
-    
-    private func showPopup(at index: Int) {
-        
-        guard
-            let dataSource = self.dataSource,
-            index < dataSource.numberOfWalkthroughPopups(for: self)
+
+    private func startOver() {
+
+        self.stop()
+        self.start()
+    }
+
+    // MARK: Stop Mechanism
+
+    public func forceStop() {
+        self.stop(force: true)
+    }
+
+    private func stop(force: Bool = false) {
+
+        guard self.currentIndex >= 0 else { return }
+
+        self.currentIndex = -1
+        self.hideCurrentPopUp()
+        self.delegate?.walkthroughControllerDidFinishFlow(self, forceStop: force)
+    }
+
+    // MARK: Show Mechanism
+
+    private func handleNextPopUp() {
+
+        self.hideCurrentPopUp()
+        self.currentIndex += 1
+        self.handlePopUp(at: self.currentIndex)
+    }
+
+    private func handlePopUp(at index: Int) {
+
+        guard let dataSource = self.dataSource,
+              index < dataSource.numberOfWalkthroughPopups(for: self),
+              let popUp = dataSource.walkthroughPopUp(for: self, at: index)
         else {
-            
+
             self.stop()
             return
         }
-        
-        let popUp = dataSource.walkthroughPopup(for: self, at: index)
-        
-        if self.delegate?.walkthroughController(for: self, shouldShow: popUp, at: index) ?? true {
-            self.presentPopup(popUp, at: index)
+
+        if self.delegate?.walkthroughController(self, shouldShowPopUpAt: index) ?? true {
+            self.showPopUp(popUp, at: index)
         } else {
-            currentIndex += 1
-            self.showPopup(at: currentIndex)
+            self.handleNextPopUp()
         }
     }
-    
-    private func presentPopup(_ popup: WalkthroughPopup, at index: Int) {
-        
-        self.delegate?.walkthroughController(for: self, willShow: popup, at: index)
-        
+
+    private func showPopUp(_ popup: WalkthroughPopUp, at index: Int) {
+
+        self.delegate?.walkthroughController(self, willShowPopUpAt: index)
+        self.buildAndPresentPopUp(for: popup)
+        self.delegate?.walkthroughController(self, didShowPopUpAt: index)
+    }
+
+    private func buildAndPresentPopUp(for popUp: WalkthroughPopUp) {
+
+        let popUpView = self.buildPopUp(for: popUp)
+        self.popUpView = popUpView
+        self.presentPopUp(popUpView)
+    }
+
+    private func buildPopUp(for popUp: WalkthroughPopUp) -> UIView {
+
         let containerView = UIView(frame: UIScreen.main.bounds)
         let fullPath = UIBezierPath(rect: containerView.frame)
-        
-        let punchPath: UIBezierPath
-        
-        if let customPunch = popup.customPunch {
-            
-            punchPath = customPunch
-            
-        } else if let targetView = popup.targetComponent {
-            
-            let origin = targetView.globalPoint
-            let size = targetView.frame.size
-            
-            let punchRect = CGRect(x: origin.x - popup.punchPadding,
-                                   y: origin.y - popup.punchPadding,
-                                   width: size.width + popup.punchPadding.doubleValue,
-                                   height: size.height + popup.punchPadding.doubleValue)
-            
-            punchPath = UIBezierPath(roundedRect: punchRect, cornerRadius: popup.cornerRounding.cornerRadius)
-            
-        } else {
-            
-            punchPath = UIBezierPath()
-        }
-        
-        fullPath.append(punchPath)
-        
         fullPath.usesEvenOddFillRule = true
+
+        let punchPath = Self.buildPunchPath(for: popUp)
+        fullPath.append(punchPath)
+
         let fillLayer = CAShapeLayer()
         fillLayer.path = fullPath.cgPath
         fillLayer.fillRule = .evenOdd
-        fillLayer.fillColor = self.configurations.overlayColor.cgColor
-        
+        fillLayer.fillColor = configurations.overlayColor.cgColor
+
         containerView.layer.addSublayer(fillLayer)
-        containerView.isUserInteractionEnabled = !self.configurations.forwardTouchEvents
-        
-        self.presentationWindow?.addSubview(containerView)
-        self.overlayView = containerView
+        //containerView.isUserInteractionEnabled = !self.configurations.forwardTouchEvents
+
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.didTapOnOverlay))
+        containerView.addGestureRecognizer(tapRecognizer)
+
+        if let bodyView = popUp.bodyView {
+            containerView.addSubview(bodyView)
+        }
+
+        return containerView
+    }
+
+    private class func buildPunchPath(for popUp: WalkthroughPopUp) -> UIBezierPath {
+
+        // Custom Punch
+        if let customPunch = popUp.customPunch {
+            return customPunch
+        }
+
+        // Default Punch for target view
+        if let targetView = popUp.targetComponent {
+
+            let origin = targetView.globalPoint
+            let size = targetView.frame.size
+
+            let punchRect = CGRect(x: origin.x - popUp.punchPadding,
+                                   y: origin.y - popUp.punchPadding,
+                                   width: size.width + popUp.punchPadding.doubleValue,
+                                   height: size.height + popUp.punchPadding.doubleValue)
+
+            return UIBezierPath(roundedRect: punchRect, cornerRadius: popUp.cornerRounding.cornerRadius)
+        }
+
+        // No Punch
+        return .init(rect: .zero)
+    }
+
+    private func presentPopUp(_ popUpView: UIView) {
+
+        guard let presentationWindow = presentationWindow else { return }
+
+        UIView.transition(with: presentationWindow,
+                          duration: self.configurations.animationDuration,
+                          options: self.configurations.animationTypes) {
+            presentationWindow.addSubview(popUpView)
+        }
+    }
+
+    // MARK: Hide Mechanism
+
+    private func hideCurrentPopUp() {
+
+        guard self.currentIndex >= 0 else { return }
+
+        self.delegate?.walkthroughController(self, willHidePopUpAt: self.currentIndex)
+        self.popUpView?.removeFromSuperview()
+        self.delegate?.walkthroughController(self, didHidePopUpAt: self.currentIndex)
+    }
+
+    // MARK: Actions
+
+    @objc private func didTapOnOverlay() {
+        self.handleNextPopUp()
     }
 }
