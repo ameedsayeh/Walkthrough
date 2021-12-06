@@ -21,7 +21,7 @@ public final class WalkthroughController {
     private var popUpView: UIView?
     private var punchPath: UIBezierPath?
     
-    init(with configurations: WalkthroughConfigurations = WalkthroughConfigurations()) {
+    public init(with configurations: WalkthroughConfigurations = WalkthroughConfigurations()) {
         self.configurations = configurations
     }
 

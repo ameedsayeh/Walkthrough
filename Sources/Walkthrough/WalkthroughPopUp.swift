@@ -19,7 +19,7 @@ public class WalkthroughPopUp {
     var punchPadding: CGFloat = .zero
     var punchGlow: PunchGlow = .none
     
-    internal init(targetComponent: UIView? = nil,
+    public init(targetComponent: UIView? = nil,
                   arrowView: UIView? = nil,
                   bodyView: UIView? = nil,
                   bodyViewPosition: BodyViewPosition = .fullScreen,
@@ -40,7 +40,7 @@ public class WalkthroughPopUp {
 }
 
 // MARK: Rounding
-extension WalkthroughPopUp {
+public extension WalkthroughPopUp {
 
     enum Rounding {
 
@@ -65,7 +65,7 @@ extension WalkthroughPopUp {
 }
 
 // MARK: BodyViewPosition
-extension WalkthroughPopUp {
+public extension WalkthroughPopUp {
 
     enum BodyViewPosition {
 
@@ -76,7 +76,7 @@ extension WalkthroughPopUp {
 }
 
 // MARK: Punch Glow
-extension WalkthroughPopUp {
+public extension WalkthroughPopUp {
 
     enum PunchGlow {
         case none
