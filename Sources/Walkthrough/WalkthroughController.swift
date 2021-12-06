@@ -10,8 +10,8 @@ import UIKit
 
 public final class WalkthroughController {
     
-    weak var delegate: WalkthroughControllerDelegate?
-    weak var dataSource: WalkthroughControllerDataSource?
+    public weak var delegate: WalkthroughControllerDelegate?
+    public weak var dataSource: WalkthroughControllerDataSource?
     
     private(set) var configurations: WalkthroughConfigurations
 
