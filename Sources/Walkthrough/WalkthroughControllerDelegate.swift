@@ -6,7 +6,7 @@
 
 import Foundation
 
-protocol WalkthroughControllerDelegate: AnyObject {
+public protocol WalkthroughControllerDelegate: AnyObject {
 
     func walkthroughController(_ walkthroughController: WalkthroughController,
                                shouldShowPopUpAt index: Int) -> Bool
@@ -31,7 +31,7 @@ protocol WalkthroughControllerDelegate: AnyObject {
 }
 
 // MARK: Default implementation
-extension WalkthroughControllerDelegate {
+public extension WalkthroughControllerDelegate {
 
     func walkthroughController(_ walkthroughController: WalkthroughController,
                                shouldShowPopUpAt index: Int) -> Bool { true }

@@ -6,7 +6,7 @@
 
 import Foundation
 
-protocol WalkthroughControllerDataSource: AnyObject {
+public protocol WalkthroughControllerDataSource: AnyObject {
     
     func numberOfWalkthroughPopups(for walkthroughController: WalkthroughController) -> Int
 

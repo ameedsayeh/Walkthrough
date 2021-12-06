@@ -4,9 +4,11 @@
 //  Created by Ameed Sayeh on 19/02/2021.
 //
 
+#if canImport(UIKit)
+
 import UIKit
 
-class WalkthroughPopUp {
+public class WalkthroughPopUp {
     
     weak var targetComponent: UIView?
     var arrowView: UIView?
@@ -14,7 +16,8 @@ class WalkthroughPopUp {
     var customPunch: UIBezierPath?
     var cornerRounding: Rounding = .none
     var bodyViewPosition: BodyViewPosition = .above
-    var punchPadding: CGFloat = 4
+    var punchPadding: CGFloat = .zero
+    var punchGlow: PunchGlow = .none
     
     internal init(targetComponent: UIView? = nil,
                   arrowView: UIView? = nil,
@@ -22,7 +25,8 @@ class WalkthroughPopUp {
                   bodyViewPosition: BodyViewPosition = .fullScreen,
                   customPunch: UIBezierPath? = nil,
                   cornerRounding: Rounding = .none,
-                  punchPadding: CGFloat = 4) {
+                  punchPadding: CGFloat = .zero,
+                  punchGlow: PunchGlow = .none) {
         
         self.targetComponent = targetComponent
         self.arrowView = arrowView
@@ -31,6 +35,7 @@ class WalkthroughPopUp {
         self.customPunch = customPunch
         self.cornerRounding = cornerRounding
         self.punchPadding = punchPadding
+        self.punchGlow = punchGlow
     }
 }
 
@@ -59,6 +64,7 @@ extension WalkthroughPopUp {
     }
 }
 
+// MARK: BodyViewPosition
 extension WalkthroughPopUp {
 
     enum BodyViewPosition {
@@ -68,3 +74,14 @@ extension WalkthroughPopUp {
         case fullScreen
     }
 }
+
+// MARK: Punch Glow
+extension WalkthroughPopUp {
+
+    enum PunchGlow {
+        case none
+        case glow(color: UIColor, opacity: Float, radius: CGFloat)
+    }
+}
+
+#endif

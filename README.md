@@ -1,5 +1,6 @@
 # Walkthrough
-AppTour Library for iOS Apps
 
-## Status
-Basic functionality works, but still needs more work.
+A Simple Walkthrough / App Tour Library for iOS
+
+- Basic functionality works.
+- Work is still in progress.
