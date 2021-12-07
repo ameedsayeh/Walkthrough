@@ -63,8 +63,8 @@ public final class WalkthroughController {
         
         guard self.currentIndex >= 0 else { return }
         
-        self.currentIndex = -1
         self.hideCurrentPopUp()
+        self.currentIndex = -1
         self.delegate?.walkthroughControllerDidFinishFlow(self, forceStop: force)
     }
     
