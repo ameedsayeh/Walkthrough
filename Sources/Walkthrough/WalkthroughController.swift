@@ -8,7 +8,7 @@
 
 import UIKit
 
-public final class WalkthroughController {
+public final class WalkthroughController: NSObject {
     
     public weak var delegate: WalkthroughControllerDelegate?
     public weak var dataSource: WalkthroughControllerDataSource?
