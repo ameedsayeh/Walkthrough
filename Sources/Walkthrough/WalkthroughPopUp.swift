@@ -38,9 +38,9 @@ public class WalkthroughPopUp {
 
 // MARK: Rounding
 public extension WalkthroughPopUp {
-
+    
     enum Rounding {
-
+        
         case none
         case unified(radius: CGFloat)
         case custom(topLeft: CGFloat, topRight: CGFloat, bottomLeft: CGFloat, bottomRight: CGFloat)
@@ -49,9 +49,9 @@ public extension WalkthroughPopUp {
 
 // MARK: BodyViewPosition
 public extension WalkthroughPopUp {
-
+    
     enum BodyViewPosition {
-
+        
         case above
         case below
         case fullScreen
@@ -60,7 +60,7 @@ public extension WalkthroughPopUp {
 
 // MARK: Punch Glow
 public extension WalkthroughPopUp {
-
+    
     enum PunchGlow {
         case none
         case glow(color: UIColor, opacity: Float, radius: CGFloat)
