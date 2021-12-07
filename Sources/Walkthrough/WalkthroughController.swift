@@ -223,7 +223,22 @@ public final class WalkthroughController {
                                    width: size.width + popUp.punchPadding.doubled,
                                    height: size.height + popUp.punchPadding.doubled)
 
-            return UIBezierPath(roundedRect: punchRect, cornerRadius: popUp.cornerRounding.cornerRadius)
+            switch popUp.cornerRounding {
+            case .none:
+                return UIBezierPath(rect: punchRect)
+
+            case .unified(let radius):
+                return UIBezierPath(roundedRect: punchRect, cornerRadius: radius)
+
+            case .custom(let topLeft, let topRight, let bottomLeft, let bottomRight):
+                return UIBezierPath(shouldRoundRect: punchRect,
+                                    topLeftRadius: CGSize(width: topLeft, height: topLeft),
+                                    topRightRadius: CGSize(width: topRight, height: topRight),
+                                    bottomLeftRadius: CGSize(width: bottomLeft, height: bottomLeft),
+                                    bottomRightRadius: CGSize(width: bottomRight, height: bottomRight))
+            }
+
+            return
         }
 
         // No Punch
