@@ -5,12 +5,19 @@
 //
 
 import Foundation
+import UIKit
 
 public protocol WalkthroughControllerDelegate: AnyObject {
     
     func walkthroughController(_ walkthroughController: WalkthroughController,
                                shouldShowPopUpAt index: Int) -> Bool
-    
+
+    func walkthroughController(_ walkthroughController: WalkthroughController,
+                               willLayoutPopUpAt index: Int,
+                               inside containerView: UIView,
+                               forPunchIn bounds: CGRect,
+                               position: WalkthroughPopUp.BodyViewPosition)
+
     func walkthroughController(_ walkthroughController: WalkthroughController,
                                willShowPopUpAt index: Int)
     
@@ -35,7 +42,13 @@ public extension WalkthroughControllerDelegate {
     
     func walkthroughController(_ walkthroughController: WalkthroughController,
                                shouldShowPopUpAt index: Int) -> Bool { true }
-    
+
+    func walkthroughController(_ walkthroughController: WalkthroughController,
+                               willLayoutPopUpAt index: Int,
+                               inside containerView: UIView,
+                               forPunchIn bounds: CGRect,
+                               position: WalkthroughPopUp.BodyViewPosition) {}
+
     func walkthroughController(_ walkthroughController: WalkthroughController,
                                willShowPopUpAt index: Int) {}
     

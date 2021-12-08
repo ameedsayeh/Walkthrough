@@ -11,23 +11,20 @@ import UIKit
 public class WalkthroughPopUp {
     
     weak var targetComponent: UIView?
-    var bodyView: UIView?
+    var bodyViewPosition: BodyViewPosition = .below
     var customPunch: UIBezierPath?
     var cornerRounding: Rounding = .none
-    var bodyViewPosition: BodyViewPosition = .above
     var punchPadding: CGFloat = .zero
     var punchGlow: PunchGlow = .none
     
     public init(targetComponent: UIView? = nil,
-                bodyView: UIView? = nil,
-                bodyViewPosition: BodyViewPosition = .fullScreen,
+                bodyViewPosition: BodyViewPosition = .below,
                 customPunch: UIBezierPath? = nil,
                 cornerRounding: Rounding = .none,
                 punchPadding: CGFloat = .zero,
                 punchGlow: PunchGlow = .none) {
         
         self.targetComponent = targetComponent
-        self.bodyView = bodyView
         self.bodyViewPosition = bodyViewPosition
         self.customPunch = customPunch
         self.cornerRounding = cornerRounding
@@ -62,6 +59,7 @@ public extension WalkthroughPopUp {
 public extension WalkthroughPopUp {
     
     enum PunchGlow {
+
         case none
         case glow(color: UIColor, opacity: Float, radius: CGFloat)
     }
