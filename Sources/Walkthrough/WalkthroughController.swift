@@ -111,10 +111,10 @@ public final class WalkthroughController: NSObject {
     
     private func buildPopUp(for popUp: WalkthroughPopUp) -> UIView {
         
-        let containerView = UIView(frame: UIScreen.main.bounds)
-        
+        let overlayView = UIView(frame: UIScreen.main.bounds)
+
         // Overlay
-        let fullPath = UIBezierPath(rect: containerView.frame)
+        let fullPath = UIBezierPath(rect: overlayView.frame)
         fullPath.usesEvenOddFillRule = true
         
         // Component Clip path
@@ -128,7 +128,7 @@ public final class WalkthroughController: NSObject {
         fillLayer.fillRule = .evenOdd
         fillLayer.fillColor = self.configurations.overlayColor.cgColor
         
-        containerView.layer.addSublayer(fillLayer)
+        overlayView.layer.addSublayer(fillLayer)
         
         // Add Glow
         switch popUp.punchGlow {
@@ -140,33 +140,52 @@ public final class WalkthroughController: NSObject {
                                                 with: glowColor,
                                                 opacity: opacity,
                                                 radius: radius)
-            containerView.layer.addSublayer(glowLayer)
+            overlayView.layer.addSublayer(glowLayer)
         }
-        
-        // Add body view
-        if let bodyView = popUp.bodyView {
-            
-            containerView.addSubview(bodyView)
-            
-            switch popUp.bodyViewPosition {
-            case .above:
-                bodyView.frame.origin.y = punchPath.bounds.minY - bodyView.bounds.height
-                bodyView.center.x = punchPath.bounds.midX
-                
-            case .below:
-                bodyView.frame.origin.y = punchPath.bounds.maxY
-                bodyView.center.x = punchPath.bounds.midX
-                
-            case .fullScreen:
-                break
-            }
-        }
-        
+
         // Add Tap recognizer
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.didTapOnOverlay(_:)))
-        containerView.addGestureRecognizer(tapRecognizer)
-        
-        return containerView
+        overlayView.addGestureRecognizer(tapRecognizer)
+
+        let containerView = UIView()
+        containerView.backgroundColor = .clear
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        overlayView.addSubview(containerView)
+
+        switch popUp.bodyViewPosition {
+        case .above:
+            NSLayoutConstraint.activate([
+                containerView.topAnchor.constraint(equalTo: overlayView.layoutMarginsGuide.topAnchor),
+                containerView.leadingAnchor.constraint(equalTo: overlayView.leadingAnchor),
+                containerView.trailingAnchor.constraint(equalTo: overlayView.trailingAnchor),
+                containerView.bottomAnchor.constraint(equalTo: overlayView.topAnchor, constant: punchPath.bounds.minY)
+            ])
+
+        case .below:
+            NSLayoutConstraint.activate([
+                containerView.topAnchor.constraint(equalTo: overlayView.topAnchor, constant: punchPath.bounds.maxY),
+                containerView.leadingAnchor.constraint(equalTo: overlayView.leadingAnchor),
+                containerView.trailingAnchor.constraint(equalTo: overlayView.trailingAnchor),
+                containerView.bottomAnchor.constraint(equalTo: overlayView.layoutMarginsGuide.bottomAnchor)
+            ])
+
+        case .fullScreen:
+            NSLayoutConstraint.activate([
+                containerView.topAnchor.constraint(equalTo: overlayView.layoutMarginsGuide.topAnchor),
+                containerView.leadingAnchor.constraint(equalTo: overlayView.leadingAnchor),
+                containerView.trailingAnchor.constraint(equalTo: overlayView.trailingAnchor),
+                containerView.bottomAnchor.constraint(equalTo: overlayView.layoutMarginsGuide.bottomAnchor)
+            ])
+        }
+
+        // Apply user customizations
+        self.delegate?.walkthroughController(self,
+                                             willLayoutPopUpAt: self.currentIndex,
+                                             inside: containerView,
+                                             forPunchIn: punchPath.bounds,
+                                             position: popUp.bodyViewPosition)
+
+        return overlayView
     }
     
     private func presentPopUp(_ popUpView: UIView) {
@@ -184,11 +203,23 @@ public final class WalkthroughController: NSObject {
     
     private func hideCurrentPopUp() {
         
-        guard self.currentIndex >= 0 else { return }
-        
+        guard self.currentIndex >= 0,
+              let presentationWindow = self.presentationWindow
+        else { return }
+
         self.delegate?.walkthroughController(self, willHidePopUpAt: self.currentIndex)
-        self.popUpView?.removeFromSuperview()
-        self.delegate?.walkthroughController(self, didHidePopUpAt: self.currentIndex)
+
+        UIView.transition(with: presentationWindow,
+                          duration: self.configurations.animationDuration,
+                          options: self.configurations.animationTypes) { [weak self] in
+
+            self?.popUpView?.removeFromSuperview()
+
+        } completion: { [weak self, currentIndex] _ in
+
+            guard let self = self else { return }
+            self.delegate?.walkthroughController(self, didHidePopUpAt: currentIndex)
+        }
     }
     
     // MARK: Actions
