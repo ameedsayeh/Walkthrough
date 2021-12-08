@@ -4,7 +4,6 @@
 //  Created by Ameed Sayeh on 19/02/2021.
 //
 
-import Foundation
 import UIKit
 
 public protocol WalkthroughControllerDelegate: AnyObject {
