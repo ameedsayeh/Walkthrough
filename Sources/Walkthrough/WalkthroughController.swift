@@ -203,11 +203,23 @@ public final class WalkthroughController: NSObject {
     
     private func hideCurrentPopUp() {
         
-        guard self.currentIndex >= 0 else { return }
+        guard self.currentIndex >= 0,
+              let presentationWindow = self.presentationWindow
+        else { return }
         
         self.delegate?.walkthroughController(self, willHidePopUpAt: self.currentIndex)
-        self.popUpView?.removeFromSuperview()
-        self.delegate?.walkthroughController(self, didHidePopUpAt: self.currentIndex)
+
+        UIView.transition(with: presentationWindow,
+                          duration: self.configurations.animationDuration,
+                          options: self.configurations.animationTypes) { [weak self] in
+
+            self?.popUpView?.removeFromSuperview()
+
+        } completion: { [weak self] _ in
+
+            guard let self = self else { return }
+            self.delegate?.walkthroughController(self, didHidePopUpAt: self.currentIndex)
+        }
     }
     
     // MARK: Actions
