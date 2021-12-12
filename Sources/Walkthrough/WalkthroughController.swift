@@ -244,9 +244,11 @@ public final class WalkthroughController: NSObject {
 
         let pressPoint = recognizer.location(in: self.popUpView)
 
-        guard self.punchPath?.bounds.contains(pressPoint) ?? false else { return }
+        if self.punchPath?.bounds.contains(pressPoint) ?? false {
+            self.delegate?.walkthroughController(self, didLongPressInsidePunchForPopUpAt: self.currentIndex)
+        }
 
-        self.delegate?.walkthroughController(self, didLongPressInsidePunchForPopUpAt: self.currentIndex)
+        self.handleNextPopUp()
     }
     
     // Helpers
