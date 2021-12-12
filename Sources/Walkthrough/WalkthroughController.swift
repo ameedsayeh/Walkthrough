@@ -147,6 +147,10 @@ public final class WalkthroughController: NSObject {
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.didTapOnOverlay(_:)))
         overlayView.addGestureRecognizer(tapRecognizer)
 
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.didLongPressOnOverlay(_:)))
+        longPressGesture.minimumPressDuration = 0.1
+        overlayView.addGestureRecognizer(longPressGesture)
+
         let containerView = UIView()
         containerView.backgroundColor = .clear
         containerView.translatesAutoresizingMaskIntoConstraints = false
@@ -233,6 +237,15 @@ public final class WalkthroughController: NSObject {
         }
         
         self.handleNextPopUp()
+    }
+
+    @objc private func didLongPressOnOverlay(_ recognizer: UILongPressGestureRecognizer) {
+
+        let pressPoint = recognizer.location(in: self.popUpView)
+
+        guard self.punchPath?.bounds.contains(pressPoint) ?? false else { return }
+
+        self.delegate?.walkthroughController(self, didLongPressInsidePunchForPopUpAt: self.currentIndex)
     }
     
     // Helpers
