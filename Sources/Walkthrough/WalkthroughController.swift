@@ -147,6 +147,7 @@ public final class WalkthroughController: NSObject {
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.didTapOnOverlay(_:)))
         overlayView.addGestureRecognizer(tapRecognizer)
 
+        // Add Long Press recognizer
         let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.didLongPressOnOverlay(_:)))
         longPressGesture.minimumPressDuration = self.configurations.minimumLongPressDuration
         overlayView.addGestureRecognizer(longPressGesture)
