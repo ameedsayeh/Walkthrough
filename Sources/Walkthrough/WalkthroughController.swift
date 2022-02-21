@@ -15,7 +15,7 @@ public final class WalkthroughController: NSObject {
     
     private(set) var configurations: WalkthroughConfigurations
     
-    private weak var presentationWindow: UIWindow?
+    private weak var presentationView: UIView?
     
     private var currentIndex: Int = -1
     private var popUpView: UIView?
@@ -27,9 +27,9 @@ public final class WalkthroughController: NSObject {
     
     // MARK: Start Mechanism
     
-    public func start(on window: UIWindow) {
+    public func start(on view: UIView) {
         
-        self.presentationWindow = window
+        self.presentationView = view
         self.currentIndex == -1 ?
         self.start():
         self.startOver()
@@ -195,12 +195,12 @@ public final class WalkthroughController: NSObject {
     
     private func presentPopUp(_ popUpView: UIView) {
         
-        guard let presentationWindow = presentationWindow else { return }
+        guard let presentationView = self.presentationView else { return }
         
-        UIView.transition(with: presentationWindow,
+        UIView.transition(with: presentationView,
                           duration: self.configurations.animationDuration,
                           options: self.configurations.animationTypes) {
-            presentationWindow.addSubview(popUpView)
+            presentationView.addSubview(popUpView)
         }
     }
     
@@ -209,12 +209,12 @@ public final class WalkthroughController: NSObject {
     private func hideCurrentPopUp() {
         
         guard self.currentIndex >= 0,
-              let presentationWindow = self.presentationWindow
+              let presentationView = self.presentationView
         else { return }
 
         self.delegate?.walkthroughController(self, willHidePopUpAt: self.currentIndex)
 
-        UIView.transition(with: presentationWindow,
+        UIView.transition(with: presentationView,
                           duration: self.configurations.animationDuration,
                           options: self.configurations.animationTypes) { [weak self] in
 
